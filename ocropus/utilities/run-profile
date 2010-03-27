@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#
+# checks for correct building and runs ocropus with profiling
+#
+# Responsible: tmb
+# Reviewer: kofler
+#
+
+. `dirname $0`/common.sh
+
+verifyDir
+
+section RUN-PROFILE
+
+jam clean
+test -x ocrocmd/ocrocmd && die "failed to clean ocropus executable"
+
+jam -dx -s opt='-g -O2 -DUNSAFE -pg' -s LINKFLAGS='-pg' || die "jam build failed"
+test -x ocrocmd/ocrocmd || die "failed to build ocropus executable"
+
+verifyCommand "./ocrocmd/ocrocmd data/pages/alice_1.png" 0
+test -s gmon.out || die "failed to create gmon.out"
+
+gprof ocrocmd/ocrocmd gmon.out > profile.out
+
+head -n20 profile.out >&2
+echo "[...] (details in profile.out)">&2
+echo  >&2

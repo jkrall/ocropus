@@ -1,0 +1,33 @@
+<!-- 
+    This file is a sample input for alignment.
+     Images are referenced by `image' fields inside the title attributes.
+     Line-level bboxes are necessary for alignment, too. Page-level bbox is not.
+-->
+
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Ground Truth</title>
+    </head>
+<body>
+<div class="ocr_page" title="image align-input-1.png">
+<span class="ocr_line" title="bbox 9 10 708 50">"Just the place for a Snark!" the Bell-</span>
+<span class="ocr_line" title="bbox 71 64 259 100">man cried,</span>
+<span class="ocr_line" title="bbox 9 115 597 151">As he landed his crew with care;</span>
+<span class="ocr_line" title="bbox 10 166 710 205">Supporting each man on the top of the</span>
+<span class="ocr_line" title="bbox 71 219 137 249">tide</span>
+<span class="ocr_line" title="bbox 9 271 591 308">By a finger entwined in his hair.</span>
+</div>
+<div class="ocr_page" title="image align-input-2.png">
+<span class="ocr_line" title="bbox 17 5 718 44">"Just the place for a Snark! I have said</span>
+<span class="ocr_line" title="bbox 79 60 220 87">it twice:</span>
+<span class="ocr_line" title="bbox 17 108 715 147">That alone should encourage the crew.</span>
+<span class="ocr_line" title="bbox 18 159 718 198">Just the place for the Snark! I have said</span>
+<span class="ocr_line" title="bbox 79 212 232 242">it thrice:</span>
+<span class="ocr_line" title="bbox 18 263 662 302">What I tell you three times is true"</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+# Copyright 2007 Deutsches Forschungszentrum fuer Kuenstliche Intelligenz 
+# or its licensors, as applicable.
+# 
+# You may not use this file except under the terms of the accompanying license.
+# 
+# Licensed under the Apache License, Version 2.0 (the "License"); you
+# may not use this file except in compliance with the License. You may
+# obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# 
+# Project: 
+# File: 
+# Purpose: simple consistency checks for Jamfiles (run from top of project)
+# Responsible: tmb
+# Reviewer: 
+# Primary Repository: 
+# Web Sites: www.iupr.org, www.dfki.de
+
+import os,re,getopt,sys
+from os.path import join, getsize
+
+def search(r,s):
+    global groups
+    groups = re.search(r,s)
+    return groups
+
+def warn(s):
+    global jamfile,nr,line
+    print "%s:%d:%s"%(jamfile,nr,s)
+    print "   ",line
+
+for jamfile in os.popen("find . -name Jamfile -print","r").readlines():
+    jamfile = jamfile[:-1]
+    features = []
+    nr = 0
+    for line in open(jamfile,"r").readlines():
+        jamdir = re.sub(r'/[^/]*$','',jamfile)
+        jamdir = re.sub(r'^\./','',jamdir)
+        nr += 1
+        line = line[:-1]
+        if search(r'SubDir\s+TOP\s+(\S+(\s+\S+)*)\s*;',line):
+            features += "subdir"
+            dir = groups.group(1)
+            dir = re.sub(r'\s+','/',dir)
+            if dir!=jamdir: warn("bad SubDir: "+dir+" wanted: "+jamdir)
+        elif jamfile!="./Jamfile" and search("SubDir",line):
+            warn("bad SubDir syntax")
+        elif search(r'ImportDir\s+TOP\s+(\S+(\s+\S+)*)\s*;',line):
+            features += "importdir"
+            dir = groups.group(1)
+            dir = re.sub(r'\s+','/',dir)
+            if not os.path.isdir(dir): warn("bad ImportDir: "+dir+" wanted: "+jamdir)
+        elif search("ImportDir",line):
+            warn("bad ImportDir syntax")
+        elif search(r'[^>]\b([a-zA-Z0-9_-]+\.(?:cc|h))\b',line):
+            for file in groups.groups():
+                path = jamdir+"/"+file
+                if not os.path.exists(path):
+                    warn("file does not exist: "+path)
+
+print "all checks completed"

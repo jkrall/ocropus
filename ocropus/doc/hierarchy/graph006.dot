@@ -1,0 +1,10 @@
+
+    digraph "graph6"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "WhitespaceCuts"->"ColSeparators";
+
+    }
+    

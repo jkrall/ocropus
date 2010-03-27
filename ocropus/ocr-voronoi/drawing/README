@@ -1,0 +1,51 @@
+dl --- an image generator for viewing the results of le and be
+
+written by Motoi Iwata and Koichi Kise (Osaka Pref. Univ.)
+
+1. FILES
+
+  The archive dl-<date>.tgz, where <date> is the dete of production
+of this archive, contains the program for drawing the line segments
+and points extracted by "le" and "be".
+
+2. Installation
+
+  This program requires {\tt libtiff}.
+In the directory you extracted the files from the archive,
+just do {\tt make}. You can find {\tt dl} in the 
+current directory if the compilation is successful.
+
+  We have tested this program under RedHat 5.2 (kernel ver. 2.0.36)
+with gcc 2.7.2.3.
+
+3. Use
+
+  The program {\tt dl} requires three arguments:
+an input binary image (with sunraster or TIFF format), 
+a file of line segments or points (the output of le or be),
+and an output image (with TIFF format).
+  These arguments are fed to the program as follows:
+
+	dl -i <input image> -l <line segment file> -o <output image>
+	dl -i <input image> -p <point file> -o <output image>
+
+The description of optional argumenets can be found in
+the memo of this software.
+
+4. Comments, Bug Reports
+
+   Please send them to the address:
+
+	kise@cs.osakafu-u.ac.jp
+
+5. Note
+
+   The authors of this software are Motoi Iwata and Koichi Kise.
+   Copyright (c) 1998, 1999 Motoi Iwata and Koichi Kise.
+   Permission to use, copy, modify, and distribute this software for any
+   purpose without fee is hereby granted, provided that this entire notice
+   is included in all copies of any software which is or includes a copy
+   or modification of this software and in all copies of the supporting
+   documentation for such software.
+   THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+   WARRANTY.

@@ -1,0 +1,10 @@
+#!/bin/sh
+find . -name '*.png' |
+egrep 'Volume_.*/..../.....png' |
+while read image; do
+    base=$(echo $image | sed 's/.png//')
+    echo
+    echo $base
+    echo
+    bpnet=/usr/local/share/ocropus/models/neural-net-file.nn ocroscript align-transcription --cut $image $base.txt $base.cseg.png $base.rseg.png $base.costs
+done

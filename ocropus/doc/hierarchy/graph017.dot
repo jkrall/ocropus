@@ -1,0 +1,14 @@
+
+    digraph "graph17"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "MixturesClassifier"->"Classifier";
+"KmeansClassifier"->"Classifier";
+"BpnetMixturesClassifier"->"Classifier";
+"BpnetClassifier"->"Classifier";
+"KnnClassifier"->"Classifier";
+
+    }
+    

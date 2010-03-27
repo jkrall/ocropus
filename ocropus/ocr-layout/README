@@ -1,0 +1,6 @@
+This is the layout analyzer based on RAST algorithm applied to line finding.
+It works with binary images only. Details of the algorithm are described in:
+T. M. Breuel. "High Performance Document Layout Analysis",
+Symposium on Document Image Understanding Technology, Maryland, USA.
+http://pubs.iupr.org/DATA/2003-breuel-sdiut.pdf
+

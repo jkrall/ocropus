@@ -1,0 +1,9 @@
+This folder contains documentation for OCRopus.
+
+The subfolders are:
+hierarchy -- information about inheritence, mainly interfaces
+includes  -- information about the include structure
+[doxygen] -- generated from inline documentation
+
+
+You can find more documentation at www.ocropus.org

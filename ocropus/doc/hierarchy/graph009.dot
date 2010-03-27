@@ -1,0 +1,10 @@
+
+    digraph "graph9"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "TesseractWrapper"->"TessBaseAPI";
+
+    }
+    

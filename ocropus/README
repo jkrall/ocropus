@@ -1,0 +1,82 @@
+OCRopus - open source document analysis and OCR system (www.ocropus.org)
+
+Version 0.3 (2008-10-15)
+
+
+--------------------------------------------------------------------------------
+Building OCRopus (quick start)
+--------------------------------------------------------------------------------
+1) make sure you have these packages installed (current Ubuntu/Debian versions should work):
+    libpng (with headers)
+    libjpeg (with headers)
+    libtiff (with headers)
+
+2) install iulib from http://code.google.com/p/iulib
+
+3) install a current version of tesseract from the Subversion repository
+    (http://code.google.com/p/tesseract-ocr)
+
+4) from the release directory, run
+    ./configure
+    make
+    sudo make install
+
+Please refer to the file INSTALL for more help on building OCRopus from source.
+
+
+--------------------------------------------------------------------------------
+Executing OCRopus
+--------------------------------------------------------------------------------
+After successfully building and installing OCRopus you can use "ocroscript"
+to recognize document images.
+Try e.g.
+    ocroscript recognize data/pages/alice_1.png
+
+
+--------------------------------------------------------------------------------
+Documentation
+--------------------------------------------------------------------------------
+Please refer to http://www.ocropus.org for the most recent documentation.
+
+
+--------------------------------------------------------------------------------
+Background
+--------------------------------------------------------------------------------
+OCRopus is a state-of-the-art document analysis and OCR system, featuring
+    * pluggable layout analysis,
+    * pluggable character recognition,
+    * statistical natural language modeling and
+    * multi-lingual capabilities.
+OCRopus development is sponsored by Google and is initially intended for
+high-throughput, high-volume document conversion efforts. We expect that
+it will also be an excellent OCR system for many other applications.
+
+OCRopus is mainly based on research projects of Thomas Breuel and the Image
+Understanding and Pattern Recognition (IUPR) group of the German Research
+Center for Artificial Intelligence (DFKI) located in Kaiserslautern, Germany.
+
+OCRopus uses data structures and algorithms from iulib - the open source 
+Image Understanding Library (http://code.google.com/p/iulib/) which has
+been part of OCRopus until June 2008.
+
+
+--------------------------------------------------------------------------------
+Online Resources
+--------------------------------------------------------------------------------
+Homepage:
+    http://www.ocropus.org
+
+Forum / Mailinglist:
+    http://groups.google.com/group/ocropus
+
+Public Issue Tracker:
+    http://code.google.com/p/ocropus/issues
+
+OCRopus is made by IUPR:
+    http://www.iupr.org
+
+IUPR is a part of DFKI:
+    http://www.dfki.de
+
+hOCR Output Format:
+    http://docs.google.com/View?docid=dfxcv4vc_67g844kf

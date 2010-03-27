@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#
+# runs ocropus with timing information
+#
+# Responsible: tmb
+# Reviewer: kofler
+#
+
+. `dirname $0`/common.sh
+
+verifyDir
+cd ocroscript/scripts
+export OCROSCRIPTS=`pwd` 
+
+section RUN-TIMING
+
+retvalue=0
+
+for file in ../../data/pages/*.png; do
+    echo >&2
+    echo "  === $file" >&2
+    timing=1 `which time` -o time.out ../ocroscript recognize $file > /dev/null
+    if [ $? -ne 0 ]; then
+        retvalue=$((retvalue + 1))
+    fi
+    test -s time.out || die "could not run timing correctly"
+    echo -n "  total time: " >&2
+    cat time.out >&2
+done
+
+rm time.out
+
+exit $retvalue

@@ -1,0 +1,10 @@
+
+    digraph "graph8"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "TheCleaner"->"Cleaner";
+
+    }
+    

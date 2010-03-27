@@ -1,0 +1,36 @@
+#!/usr/bin/python
+import os,sys,os.path,glob,re,string,random
+from pylab import *
+
+# FIXME
+# -- fix boxplot to use list-of-list representation (currently broken)
+
+stream = sys.stdin
+if len(sys.argv)>1: stream = open(sys.argv[1],"r")
+
+data = []
+for line in stream.xreadlines():
+    f = line.split()
+    if len(f)>0 and f[0]=="cost":
+	cost = float(f[2])
+        value = float(f[3])
+        data.append((cost,value))
+
+hists = {}
+for cost,value in data:
+    hists.setdefault(cost,[]).append(value)
+keys = hists.keys()
+keys.sort()
+values = [array(hists[key]) for key in keys]
+for value in values: value.shape = (-1,1)
+try:
+    boxplot(x=values,positions=keys)
+except:
+    sys.stderr.write("(list boxplot failed, trying array)\n")
+    try:
+        values = concatenate(values,1) # FIXME -- we shouldn't need this
+        boxplot(x=values,positions=keys)
+    except:
+        sys.stderr.write("(array boxplot failed, trying simple boxplot)\n")
+        boxplot(x=values)
+show()

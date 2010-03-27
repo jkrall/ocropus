@@ -1,0 +1,12 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN
+    http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta content="ocr_line ocr_page" name="ocr-capabilities"/><meta content="en" name="ocr-langs"/><meta content="Latn" name="ocr-scripts"/><meta content="" name="ocr-microformats"/><title>OCR Output</title></head>
+<body><div class="ocr_page" title="image tests/images/simple.png"><span class="ocr_line" title="bbox 36 92 580 122">This is a lot of 12 point text to test the
+</span><span class="ocr_line" title="bbox 36 126 618 157">ocr code and see if it works on all types
+</span><span class="ocr_line" title="bbox 36 160 223 184">offile format</span><span class="ocr_line" title="bbox 36 194 585 225">The quick brown dog jumped over the
+</span><span class="ocr_line" title="bbox 37 228 585 259">lazy fox. The quick brown dog jumped
+</span><span class="ocr_line" title="bbox 36 262 597 293">over the lazy fox. The quick brown dog
+</span><span class="ocr_line" title="bbox 43 296 561 327">jumped over the lazy fox. The quick
+</span><span class="ocr_line" title="bbox 37 330 561 361">brown dog jumped over the lazy fox.
+</span></div></body></html>

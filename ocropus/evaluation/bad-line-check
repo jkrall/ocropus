@@ -1,0 +1,37 @@
+#!/usr/bin/python
+import os,sys,os.path,glob,re,string,random
+
+ocropus = "../ocropus-cmd/ocropus"
+simp_re = re.compile(r'[^a-zA-Z0-9,.+=/*?!-]+')
+
+def die(s):
+    sys.stderr.write("FATAL: %s\n"%s)
+    sys.exit(1)
+def ensure(s):
+    if not os.path.exists(s):
+        die("%s: file not found" % s)
+
+ensure(ocropus)
+
+directory = "../data/lines"
+if len(sys.argv)>1: directory = sys.argv[1]
+lines = glob.glob(directory+"/*.png")
+lines = [line for line in lines if os.path.exists(os.path.splitext(line)[0]+".txt")]
+sys.stderr.write("evaluating the %d lines with ground truth in %s\n" % (len(lines),directory))
+
+print "directory",directory
+for line in lines:
+    root,ext = os.path.splitext(line)
+    truth = open(root+".txt","r").read()
+    cmd = "env hocr=0 remove_hyphens=0 %s linerec %s 2> _err" % (ocropus,line)
+    ocr = os.popen(cmd,"r").read()
+    if os.path.getsize("_err")>2: # we allow two characters because something outputs a newline
+        err = open("_err","r").read()
+        err = re.sub(r'\n',' ',err)
+        err = err[:40]
+        sys.stdout.write("badmsg %s\t%s\n" % (line,err))
+    simp_truth = simp_re.sub('',truth).lower()
+    simp_ocr = simp_re.sub('',ocr).lower()
+    if simp_truth != simp_ocr:
+        sys.stdout.write("badocr %s\t%s\t%s\n" % (line,simp_truth,simp_ocr))
+    sys.stdout.flush()

@@ -1,0 +1,80 @@
+OCRopus - open source document analysis and OCR system (www.ocropus.org)
+
+
+--------------------------------------------------------------------------------
+current
+--------------------------------------------------------------------------------
+    * jam is replaced by scons
+    * automake support
+    * image understanding related code is now in separate iulib
+    * OCRopus requires installed iulib (http://code.google.com/p/iulib)
+
+
+--------------------------------------------------------------------------------
+Version 0.2 (2008-05-30) "Alpha 2"
+--------------------------------------------------------------------------------
+
+   - fixed dependency problems in jam
+   - graphical logging and debugging facility
+   - new beam search decoder
+   - make use of OpenFST and Tesseract optional
+   - implement hOCR output in lua
+   - reduced memory usage of layout analysis
+   - xy-cut layout analysis
+   - Voronoi-based layout analysis (donated by K. Kise)
+   - Otsu binarization (in addition to our own fast Sauvola)
+   - script-based automatic EM training
+   - ocropus and libraries callable directly from Python/NumPy
+   - replacement of ocrocmd by customizable Lua-scripts
+   - various bug fixes 
+
+--------------------------------------------------------------------------------
+Version 0.1.1 (2007-12-14)
+--------------------------------------------------------------------------------
+This is the first maintenance release of OCRopus Alpha, which introduces closer 
+cooperation with Tesseract to improve speed and accuracy. It also fixes several 
+portability issues.
+
+New Features:
+    * compatibility with Mac OS X and Windows
+    * ocrocmd uses block segmenter with Tesseract
+    * Lua interpreter and tolua++ integrated into the package
+
+Fixes:
+    * hOCR output is now valid (and useful) XHTML
+    * some portability fixes
+    * cleaned up deprecated interfaces
+
+
+--------------------------------------------------------------------------------
+Version 0.1.0 (2007-10-22)
+--------------------------------------------------------------------------------
+The first packaged release aims to stabilize the interfaces of the involved
+components and provides a first version of the scripting functionality
+for OCRopus based on Lua. It also includes some more preprocessing functionality
+for document images and a MLP based character classifier.
+
+New Features:
+    * Lua-based scripting of ocropus (ocroscript)
+    * unit and functional testing via ocroscript
+    * text/image segmentation in document images
+    * document image cleanup
+    * document image deskewing
+    * MLP-based character recognition
+    * OpenFST-based statistical language modeling
+    * fast binary morphology
+    * use of Tesseract 2.x instead of 1.x
+    * alignment and training data generation from transcribed ground truth
+
+Fixes:
+    * better code organization through namespaces, include file simplifications
+    * many refactorings of core components for better maintainability
+
+--------------------------------------------------------------------------------
+Technology Preview Announcement  (2007-04-09)
+--------------------------------------------------------------------------------
+The Ocropus svn was opened to the public in April 2007 in order to give a first
+preview of the project. The Technology Preview internally combined Tesseract 1.x
+with some Layout Analysis algorithms.In this stage, a basic system was already
+working but the whole architecture was still changing as well as the interfaces
+for the respective modules / components.

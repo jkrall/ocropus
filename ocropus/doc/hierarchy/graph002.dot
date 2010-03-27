@@ -1,0 +1,10 @@
+
+    digraph "graph2"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "Blit2D"->"IBlit2D";
+
+    }
+    

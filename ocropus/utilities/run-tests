@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#
+# makes sure that ocropus compiles !
+#
+# Responsible: kofler
+#
+
+# include common functions (look there for documentation!)
+. `dirname $0`/common.sh
+
+# make sure we are in the right directory
+verifyDir
+
+retvalue=0
+
+section RUN-TESTS
+verifyCommand "make check" 0
+
+exit $?

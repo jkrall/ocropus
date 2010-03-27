@@ -1,0 +1,70 @@
+#!/usr/bin/python
+
+import os,sys,re,string
+
+def die(s):
+    sys.stderr.write(s)
+    sys.exit(1)
+def run(s):
+    sys.stderr.write("# "+s+"\n")
+    return os.system(s)
+def tick(s):
+    return os.popen(s,"r").read()
+
+file = sys.argv[-1]
+rest = sys.argv[1:-1]
+
+temp = "___temp___.cc"
+tempo = "___temp___.o"
+
+def clean():
+    try: os.remove(temp)
+    except: pass
+    try: os.remove(tempo)
+    except: pass
+
+run("cp %s %s"%(file,temp))
+if run("gcc %s -c %s"%(string.join(rest),temp))!=0:
+    die("simple compile fails")
+checksum = tick("md5sum %s"%tempo)
+
+lines = open(file,"r").readlines()
+
+includes = []
+for i in range(len(lines)):
+    if re.search(r'^\s*#\s*include',lines[i]):
+        includes.append(i)
+
+def write_skipping(file,lines,skips,soft=0):
+    stream = open(file,"w")
+    for i in range(len(lines)):
+        line = lines[i]
+        if i in skips:
+            if not soft:
+                stream.write("// "+line)
+            else:
+                stream.write(line+" // NOT NEEDED")
+        else:
+            stream.write(line)
+    stream.close()
+
+skips = []
+for k in range(len(includes)):
+    clean()
+    testcase = []
+    write_skipping("___temp___.cc",lines,skips+[includes[k]])
+    if run("gcc %s -c %s"%(string.join(rest),temp))==0:
+        nchecksum = tick("md5sum %s"%tempo)
+        if checksum!=nchecksum:
+            print "WARNING checksum changed for ",lines[includes[k]][:-1]
+        else:
+            print "REMOVING",lines[includes[k]][:-1]
+            skips.append(includes[k])
+
+clean()
+
+if skips!=[]:
+    write_skipping(file+".new",lines,skips,os.getenv("fixstyle")=="soft")
+    if os.getenv("fixincludes")=="modify":
+        os.rename(file,file+".before-fix-includes") 
+        os.rename(file+".new",file)

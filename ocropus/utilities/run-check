@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#
+# checks for correct building and runs ocropus with valgrind
+#
+# Responsible: tmb
+# Reviewer: kofler
+#
+
+. `dirname $0`/common.sh
+
+verifyDir
+
+jam clean
+test -x ocrocmd/ocrocmd && die "failed to clean ocropus executable"
+
+jam -dx -s opt='-g -O2' || die "jam build failed"
+test -x ocrocmd/ocrocmd || die "failed to build ocropus executable"
+
+valgrind ./ocrocmd/ocrocmd data/pages/alice_1.png >/dev/null 2>valgrind.out
+
+tail -n20 valgrind.out >&2
+echo "[...] (details in valgrind.out)">&2
+echo  >&2

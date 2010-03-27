@@ -1,0 +1,11 @@
+
+    digraph "graph1"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "WordList"->"IDict";
+"AspellDict"->"IDict";
+
+    }
+    

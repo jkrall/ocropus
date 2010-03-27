@@ -1,0 +1,3 @@
+This folder contains some scripts for checking and testing the software
+of OCRopus. It does not contribute to the actual OCRopus code base but
+supports sanity and quality of the project.

@@ -1,0 +1,88 @@
+written by Faisal Shafait (faisal.shafait@dfki.de)
+
+This folder contains Voronoi page segmentation code by K. Kise. I have modified
+the code to compile it with g++, added voronoi namespace, restrucured the code
+to be usable as a library, and wrote wrapper classes to implement ISegmentPage
+interface. Besides I have made a few bug fixes that resulted in segmentation
+faults on 64-bit machines. The bug fixes are explicitly marked with /*Faisal
+Shafait's modifications*/ tags.
+
+1. How to Install
+
+The code has two build files:
+  - Makefile builds the code with the same input/output as that of
+    original Kise's code  
+  - Jamfile builds the code with the color-coded input/output
+    conforming to the ISegmentPage interface in OCRopus
+
+2. How to Use
+
+  (1) To get original output (voronoi line segments text file)
+	1- make
+	2- ./be in.tif in-edges.txt
+	the output file "in-edges.txt" can be visualized using dl program
+	3- drawing/dl -i in.tif -l in-edges.txt -o out.tif
+
+  (2) To get OCRopus ISegmentPage conformed output
+	1- jam
+	2- ./voronoi in.png out.png
+
+3. References
+
+   (1) Voronoi page segmentation algorithm:
+       K.Kise, A.Sato and M.Iwata,
+       Segmentation of Page Images Using the Area Voronoi Diagram,
+       Computer Vision and Image Understanding,
+       Vol.70, No.3, pp.370-382, Academic Press, 1998.6.
+
+   (2) Color coding format and evaluation of Voronoi algorithm:
+       F. Shafait, D. Keysers, T.M. Breuel,
+       Performance Evaluation and Benchmarking of Six Page Segmentation Algorithms
+       IEEE Transactions on Pattern Analysis and Machine Intelligence
+       Vol.30, No.6, pp.941-954, June 2008
+
+4. Comments, Bug Reports
+
+   Please send them to the address:
+
+	faisal.shafait@dfki.de
+
+5. Note
+
+This program contains the following public domain code as its parts:
+
+(1) Voronoi page segmentation code by K. Kise.
+	www.science.uva.nl/research/dlia/software/kise
+
+   The note in Kise's Voronoi page segmentation code's README file is as follows:
+
+   "The authors of this software are Akinori Sato, Motoi Iwata
+   and Koichi Kise except for the parts listed in (2).
+   Copyright (c) 1999 Akinori Sato, Motoi Iwata and Koichi Kise.
+   Permission to use, copy, modify, and distribute this software for any
+   purpose without fee is hereby granted, provided that this entire notice
+   is included in all copies of any software which is or includes a copy
+   or modification of this software and in all copies of the supporting
+   documentation for such software.
+   THIS SOFTWARE IS BEING PROVIDED "AS IS",
+   WITHOUT ANY EXPRESS OR IMPLIED WARRANTY. "
+
+(2) Steve Fortune's Voronoi program: sweep2
+	
+	http://netlib.bell-labs.com/netlib/voronoi/index.html
+
+   The note in Steve Fortune's Voronoi program "sweep2" is as follows:
+
+/*
+ * The author of this software is Steven Fortune.  Copyright (c) 1994 by AT&T
+ * Bell Laboratories.
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose without fee is hereby granted, provided that this entire notice
+ * is included in all copies of any software which is or includes a copy
+ * or modification of this software and in all copies of the supporting
+ * documentation for such software.
+ * THIS SOFTWARE IS BEING PROVIDED "AS IS", WITHOUT ANY EXPRESS OR IMPLIED
+ * WARRANTY.  IN PARTICULAR, NEITHER THE AUTHORS NOR AT&T MAKE ANY
+ * REPRESENTATION OR WARRANTY OF ANY KIND CONCERNING THE MERCHANTABILITY
+ * OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
+ */

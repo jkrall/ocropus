@@ -1,0 +1,5 @@
+#!/bin/sh -x
+prefix=/usr/local
+rm -rf ${prefix}/include/ocropus
+rm -rf ${prefix}/lib/libocropus.*
+rm -rf ${prefix}/bin/ocropus

@@ -1,0 +1,11 @@
+
+    digraph "graph12"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "ClassmappedStream"->"IFeatureStream";
+"Mnist"->"IFeatureStream";
+
+    }
+    

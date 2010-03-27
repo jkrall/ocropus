@@ -1,0 +1,62 @@
+
+    digraph "graph3"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "ICleanupBinary"->"IComponent";
+"DictBestPath"->"IBestPath";
+"FstBuilderImpl"->"FstBuilder";
+"UW3Charlib"->"ICharacterLibrary";
+"FilterLibrary"->"ICharacterLibrary";
+"TesseractRecognizeLine"->"IRecognizeLine";
+"ICharacterClassifier"->"IComponent";
+"ISimpleLineOCR"->"IComponent";
+"GridCharacterLibrary"->"ICharacterLibrary";
+"SegmentPageBy1CP"->"ISegmentPage";
+"ReadOnlyFst"->"IGenericFst";
+"ShortestPath"->"ISearchableFst";
+"TextImageSeg"->"ICleanupBinary";
+"IRecognizeLine"->"IComponent";
+"ISearchableFst"->"IGenericFst";
+"SegmentPageByXYCUTS"->"ISegmentPage";
+"BinarizeByOtsu"->"IBinarize";
+"DocClean"->"ICleanupBinary";
+"ISearchableFst"->"IBestPath";
+"SkelSegmenter"->"ISegmentLine";
+"FstBuilder"->"IGenericFst";
+"ConnectedComponentSegmenter"->"ISegmentLine";
+"ILines"->"IComponent";
+"BinarizeBySauvola"->"IBinarize";
+"NewGroupingLineOCR"->"IRecognizeLine";
+"ISegmentLine"->"IComponent";
+"IBestPath"->"IComponent";
+"ISegmentPage"->"IComponent";
+"CompositionFstImpl"->"CompositionFst";
+"SegmentationCharlib"->"ICharacterLibrary";
+"LineCharacterClassifier"->"ICharacterClassifier";
+"SegmentLineByProjection"->"ISegmentLine";
+"SegmentPageByWCUTS"->"ISegmentPage";
+"BinarizeByRange"->"IBinarize";
+"StandardFst"->"IGenericFst";
+"IGenericFst"->"IComponent";
+"IBinarize"->"IComponent";
+"DeskewPageByRAST"->"ICleanupBinary";
+"SegmentPageByRAST"->"ISegmentPage";
+"ICharacterLibrary"->"IComponent";
+"PngListCharlib"->"ICharacterLibrary";
+"CurvedCutSegmenterToISegmentLineAdapter"->"ISegmentLine";
+"SegmentLineByCCS"->"ISegmentLine";
+"ICleanupGray"->"IComponent";
+"CompositionFst"->"ReadOnlyFst";
+"ScreenCharacterLibrary"->"ICharacterLibrary";
+"GLineRec"->"IRecognizeLine";
+"Lines"->"ILines";
+"ITextImageClassification"->"IComponent";
+"DeskewPageByRAST"->"ICleanupGray";
+"OcropusGeneratedCharlib"->"ICharacterLibrary";
+"SliceLibrary"->"ICharacterLibrary";
+"SegmentPageBySmear"->"ISegmentPage";
+
+    }
+    

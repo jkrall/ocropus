@@ -1,0 +1,3 @@
+This folder contains code for binarization of document images. For now, there 
+is the global thresholding approach by otsu and a fast variant of sauvolas
+local approach available.

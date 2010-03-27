@@ -1,0 +1,23 @@
+This file briefly describes the folders in the OCRopus structure. There are
+READMEs in each folder that give a bit more details.
+
+commands     -- some small top-level C++ programs
+data         -- document images, language models and trained data
+doc          -- documentation
+evaluation   -- scripts for evaluating OCRopus
+ext          -- external dependencies of OCRopus
+imgbits      -- advanced image processing
+langmods     -- language modelling
+ocr-binarize -- preprocessing: functionality for binarization
+ocr-bpnet    -- classification: neural network
+ocr-deskew-rast  -- preprocessing: deskewing
+ocr-doc-clean    -- preprocessing: document image cleanup
+ocr-layout-rast  -- layout analysis
+ocroscript   -- OCRopus scripting, also contains quite some scripts
+ocr-pageseg  -- layout-analysis: page segmentation
+ocr-samples  -- simple example implementations
+ocr-tesseract    -- classification: tesseract
+ocr-utils    -- central utilities
+python-binding   -- self-explanatory
+utilities    -- utilities for checking / testing OCRopus software
+

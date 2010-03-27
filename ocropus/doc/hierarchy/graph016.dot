@@ -1,0 +1,10 @@
+
+    digraph "graph16"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "NgramModelImpl"->"NgramModel";
+
+    }
+    

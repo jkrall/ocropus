@@ -1,0 +1,18 @@
+=== pageeval-run [directory] > eval.log ===
+
+Runs OCR on each PNG file in the given directory (default:
+../data/pages) for which ground truth is present (.png replaced
+with .txt).  It then computes the edit distance for a range of block
+move costs and outputs the result.
+
+=== pageeval-plot < eval.log ===
+
+Plots the results from the pageeval-run output.
+
+You must have Matplotlib/Pylab installed for this to work.
+
+=== bad-line-check [directory] ===
+
+Runs "ocropus linerec" on each PNG file in the given directory and
+outputs a list of line images on which OCR appears to fail.
+

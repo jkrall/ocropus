@@ -1,0 +1,10 @@
+
+    digraph "graph18"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "nustring"->"narray<nuchar>";
+
+    }
+    

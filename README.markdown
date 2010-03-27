@@ -1,0 +1,114 @@
+Ocropus 0.4 - Fork for OSX 10.5.6
+==========
+
+This repo is a clone of the original ocropus 0.4 source, found here:  http://code.google.com/p/ocropus/downloads/list
+
+I've applied the various patches and fixes describe below, so that the source can be built more easily.
+(why the original tree still hasn't been updated with these fixes... I have no idea.)
+
+This fork is purely for my own use, and is NOT official.  Please contribute to the original repository, not this one.
+
+
+
+
+Instructions for getting original source to build on OSX
+==========
+
+
+Compiling ocropus on Mac OS X
+
+The ocropus code is ready to work under Mac OS X.
+
+Since Linux is the main target platform, Mac OS X support cannot be guaranteed for every svn revision.
+
+Please report OS X related issues to the list or add a report with patch if possible to the issue tracker.
+
+Please be aware that cross-platform issues will not have a high priority before the 1.0 Release.
+
+
+External software
+
+If you want to use fink or port for installing some external dependencies, please consider the following:
+
+    * You can use either fink or port to install libpng libjpeg and libtiff
+    * For jam you need to use port, it is not available via fink.
+    * Instead of plain ./configure you might want to run:
+          o  CPPFLAGS='-I/sw/include' LDFLAGS='-L/sw/lib' ./configure
+
+
+0.4 with configure/make on OS X 10.5
+
+I tried using "configure" and "make" to build and install 0.4 (from the tar file). What's more, I installed it to "/local", not "/usr/local/", and that's where my prerequisite libraries were (I had libpng, libjpeg, and leptonica installed). Here's what I ran into.
+
+First of all, I needed Xcode, so I downloaded 3.1, and installed it. Next, I needed to tell the configure process about my system. I set the following environment variables (I'm using csh, if the syntax looks odd):
+
+% setenv CPPFLAGS -I/local/include
+% setenv LDFLAGS -L/local/lib
+% setenv CXX /usr/bin/g++-4.2
+
+Next step is to install libgsl. I downloaded it, configured it, built it, and installed it in /local.
+
+I then cd'd to the "iulib" subdir. The first thing you have to do there is to to run "aclocal", to make the automake files compatible with the OS version: % aclocal %
+
+Then, you have to edit genAM.py to add some missing subdirs. Find all instances of
+
+-I$(srcdir)/imglib
+
+and change it to
+
+-I$(srcdir)/imglib -I$(srcdir)/imgbits -I$(srcdir)/vidio -I$(srcdir)/utils
+
+Now, you can run "build" to configure your system:
+
+./build --prefix=/local --with-iulib=/local --without-SDL --without-tesseract --without-leptonica
+
+This says that I want to install in "/local", that I don't have SDL installed, that I don't want to try using either tesseract or leptonica (trying to use either tickles various bugs).
+
+Next, you need to patch the sources to remove an issue. See issue 169 for the patch, and apply it.
+
+Now you can build iulib. Type
+
+% make
+% make install
+
+You may need to say "sudo make install", depending on how your prefix directory is configured.
+
+Now for ocropus proper. cd up and over to ../ocropus. Again, run "aclocal" to re-build the automake stuff. After that, I configured with
+
+./build --prefix=/local --with-iulib=/local --without-SDL --without-tesseract --without-leptonica --without-OpenMP
+
+meaning, "iulib is installed in /local, don't look for SDL, don't try to use tesseract or leptonica or OpenMP". Using OpenMP seems to cause various crashes.
+
+Again, you have to apply a fix to the code before building. See issue 158 for the fix.
+
+Now you can build ocropus proper:
+
+% make
+% make install
+
+We're not quite there yet. Now cd to your installation directory, then to share/ocropus/models. You need to unpack the default fst model:
+
+% gunzip default.fst.gz
+
+And you have to add a symlink so that ocropus sees the models:
+
+% ln -s /local/share/ocropus /usr/local/share/ocropus
+
+
+Now you should be in position to run ocropus. cd back to the directory where you built ocropus (not the distribution directory, but the "ocropus" subdir of the distribution directory). Try this:
+
+% /local/bin/ocropus page data/testimages/simple.png
+
+You should see this:
+
+This is a lot of 1 2 point text to test the
+ocr code and see if it works on all types
+of file format.
+The quick brown dog jumped over the
+lazy fox. The quick brown dog jumped
+over the lazy fox. The quick brown dog
+jumped over the lazy fox. The quick
+brown dog jumped over the lazy fox.
+
+
+That's it!

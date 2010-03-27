@@ -1,0 +1,54 @@
+#!/usr/bin/python
+
+import sys,os,re,string,os.path,glob
+
+if not os.path.isdir("ocroscript") and os.path.isdir("ocr-layout"):
+    sys.stderr.write("must run this script from the top directory of ocropus")
+    sys.exit(1)
+
+dirs = {}
+edges = []
+
+files = glob.glob("*/*.h") + glob.glob("*/*.cc")
+for file in files:
+    dir = os.path.dirname(file)
+    base = os.path.basename(file)
+    dirs[base] = dir
+    for line in open(file,"r").xreadlines():
+        match = re.search(r'^#\s*include\s+"(.*?)"',line)
+        if match:
+            include = match.group(1)
+            edges.append((include,dir))
+            # print include,dir
+
+dedges = {}
+for include,dir in edges:
+    sdir = dirs.get(include,None)
+    if sdir:
+        l = dedges.get((sdir,dir),[])
+        if not include in l:
+            dedges[(sdir,dir)] = l+[include]
+            # print sdir,"->",dir,"(",include,")"
+
+stream = open("_deps.dot","w")
+stream.write("""
+digraph "Include Dependencies"
+{
+    rankdir = "LR";
+    size = "8,20";
+    ratio = compress;
+""")
+
+iter = dedges.keys()
+for sdir,dir in iter:
+    stream.write('"%s"'%sdir+"->"+'"%s"'%dir+";\n")
+    # stream.write('"%s"'%sdir+"->"+'"%s"'%dir+" [label=\"%s\"];\n"%dedges[(sdir,dir)])
+
+stream.write("""
+}
+""")
+stream.close()
+
+out = "doc/includes/include-hierarchy.png"
+os.system("dot -o %s -Tpng _deps.dot"%out)
+sys.stderr.write("output in %s\n"%out)

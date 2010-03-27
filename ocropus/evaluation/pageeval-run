@@ -1,0 +1,70 @@
+#!/usr/bin/python
+import os,sys,os.path,glob,re,string,random
+
+# FIXME
+# -- better documentation
+# -- better command line error checking
+# -- use temporary file names instead of _truth, _ocr
+# -- more informative error messages
+# -- record machine, processing times
+# -- get rid of ./distance
+# -- output data into sqlite database
+# -- use MD5 checksums on executables, page images
+
+ocropus = "../ocropus-cmd/ocropus"
+distance = "../ocropus-cmd/ocr-distance"
+simp_re = re.compile(r'[^a-zA-Z0-9,.+=/*?! \n-]+')
+
+def simplify(s):
+    s = simp_re.sub('',s)
+    s = re.sub(r'^\s+','',s)
+    s = re.sub(r'\s+','\n',s)
+    return s
+
+def die(s):
+    sys.stderr.write("FATAL: %s\n"%s)
+    sys.exit(1)
+def ensure(s):
+    if not os.path.exists(s):
+        die("%s: file not found" % s)
+
+def compare_ocr(truth,ocr,cost):
+    truth_simp = simplify(truth)
+    ocr_simp = simplify(ocr)
+    stream = open("_truth","w")
+    stream.write(truth_simp)
+    stream.close()
+    stream = open("_ocr","w")
+    stream.write(ocr_simp)
+    stream.close()
+    stream = os.popen("%s _truth _ocr %s" % (distance,cost))
+    result = stream.read()[:-1]
+    stream.close()
+    os.unlink("_truth")
+    os.unlink("_ocr")
+    return float(result)
+
+ensure(ocropus)
+ensure(distance)
+
+data = []
+
+directory = "../data/pages"
+if len(sys.argv)>1: directory = sys.argv[1]
+pages = glob.glob(directory+"/*.png")
+pages = [page for page in pages if os.path.exists(os.path.splitext(page)[0]+".txt")]
+sys.stderr.write("evaluating the %d pages with ground truth in %s\n" % (len(pages),directory))
+
+print "directory",directory
+for page in pages:
+    sys.stderr.write("=== %s ===\n" % page)
+    print "page",page
+    root,ext = os.path.splitext(page)
+    truth = open(root+".txt","r").read()
+    cmd = "env hocr=0 remove_hyphens=0 %s ocr %s" % (ocropus,page)
+    ocr = os.popen(cmd,"r").read()
+    for cost in [1]+range(5,51,5):
+        result = compare_ocr(truth,ocr,cost)
+        print "cost",page,cost,result
+        data.append((cost,result))
+        sys.stdout.flush()

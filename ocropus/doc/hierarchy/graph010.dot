@@ -1,0 +1,16 @@
+
+    digraph "graph10"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "PngListCharacter"->"ICharacter";
+"ScreenCharacter"->"ICharacter";
+"SegmentationCharacter"->"ICharacter";
+"GridCharacter"->"ICharacter";
+"FilterCharacter"->"ICharacter";
+"OcropusGeneratedCharacter"->"ICharacter";
+"UW3Character"->"ICharacter";
+
+    }
+    

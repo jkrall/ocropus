@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#
+# checks for the presence of the right copyright and licence
+# information in src files
+#
+# Responsible: tmb
+# Reviewer: kofler
+#
+
+
+# include common functions (look there for documentation!)
+. `dirname $0`/common.sh
+
+verifyDir
+retval=0
+
+section "checking copyrights"
+find . -name '*.cc' -o -name '*.h' | grep -v EXTERNAL/ | grep -v ext/ | grep -v "test-" | egrep -v 'hacks/|version.cc' | xargs egrep -L 'Copyright .*Deutsches.*Forsch.*Intelligenz' > tmp.out
+if [ $? == 1 ]; then
+	ok
+else
+	failed tmp.out
+        retval=1
+fi
+
+section checking license
+find . -name '*.cc' -o -name '*.h' | grep -v EXTERNAL/ | grep -v ext/ | grep -v "test-" | egrep -v 'hacks/|version.cc' | xargs egrep -L 'Apache' > tmp.out
+if [ $? == 1 ]; then
+        ok
+else
+        failed tmp.out
+        retval=1
+fi
+
+rm tmp.out
+exit $retval

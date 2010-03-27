@@ -1,0 +1,147 @@
+OCRopus - open source document analysis and OCR system (www.ocropus.org)
+
+Version 0.3 (2008-10-15)
+
+
+This file contains information for building OCRopus on a Linux system.
+For differences on other platforms, please have a look at:
+http://groups.google.com/group/ocropus/web
+
+Throughout the file, we assume that `sudo' is used to get root privileges; 
+adapt those commands if you use a different method.
+
+
+--------------------------------------------------------------------------------
+Contents
+--------------------------------------------------------------------------------
+
+    * Required and Recommended Software
+        * iulib
+        * Tesseract
+    * Building OCRopus
+    * Optional Software
+    * Building Python Extension
+
+
+--------------------------------------------------------------------------------
+Required and Recommended Software
+--------------------------------------------------------------------------------
+
+iulib
+_____
+
+(http://code.google.com/p/iulib)
+
+OCRopus uses data structures and algorithms from iulib - the open source 
+Image Understanding Library which has been part of OCRopus until June 2008.
+Please install iulib and all dependencies (libpng-dev etc.) first.
+
+
+tesseract
+_________
+
+It is a good idea to install Tesseract also, although it's technically possible
+to compile OCRopus without it. You can either use a release, which is 2.03 at
+the moment of writing this, or check out an SVN version. We found revision 193
+to work.
+
+For an SVN checkout, try something like this:
+
+    svn co http://tesseract-ocr.googlecode.com/svn/trunk/ tesseract-ocr
+    cd tesseract-ocr
+    ./configure    # CXXFLAGS="-fPIC -O2" ./configure if you want Python later
+    make
+    sudo make install                                # installs in /usr/local
+
+The 2.03 release of Tesseract has a bug. We have a patch for it, it's called
+tesseract-2.03-patch.diff and located in the top-level OCRopus directory.
+So the commands to install Tesseract 2.03 might look like this:
+
+    wget http://tesseract-ocr.googlecode.com/files/tesseract-2.03.tar.gz
+    tar xzf tesseract-2.03.tar.gz
+    cd tesseract-2.03
+    wget http://tesseract-ocr.googlecode.com/files/tesseract-2.00.eng.tar.gz
+    tar xzf tesseract-2.00.eng.tar.gz             # or other language packages
+    patch -p1 <../ocropus-0.3/tesseract-2.03-patch.diff     # check this path!
+    ./configure    # CXXFLAGS="-fPIC -O2" ./configure if you want Python later
+    make
+    sudo make install                                 # installs in /usr/local
+
+The installation will finish with an error message about having no install
+target in java/ subdirectory. That's another bug in 2.03 - just ignore it.
+
+In rare cases, Tesseract 2.03 causes crashes while performing test-tess.
+This doesn't seem to affect the recognition script. In SVN, this is fixed.
+
+After Tesseract is installed, check it by typing
+
+    tesseract phototest.tif out
+    cat out.txt
+
+If out.txt starts with "This is a lot of 12 point text..." then Tesseract works.
+Please note that if it doesn't work for you, we most likely can't really help,
+but the developers of Tesseract (http://code.google.com/p/tesseract-ocr/) most
+likely can.
+
+
+--------------------------------------------------------------------------------
+Building OCRopus
+--------------------------------------------------------------------------------
+
+After installing the needed software (see above) go to the OCRopus release
+directory and run:
+    ./configure
+    make
+    make install
+
+
+You can adjust the build process with the following options to ./configure:
+  --with-tesseract=...    the root of a non-default tesseract installation.
+                          (default is /usr/local/)
+                          Should be the same directory as was given to
+                          tesseract's configure script through --prefix=
+  --with-iulib=...        the root of a non-default iulib installation.
+                          (default is /usr/local/)
+                          Should be the same directory as was given to
+                          iulib's configure script through --prefix=
+
+  --without-fst           disable OpenFST language modelling
+  --without-leptonica     disable parts depending on Leptonica
+  --without-SDL           disable SDL (graphical debugging for ocroscript)
+
+More details on configure options can be obtained with './configure --help'
+
+--------------------------------------------------------------------------------
+Optional Software
+--------------------------------------------------------------------------------
+
+This software is not mandatory, but can be useful for experimentation through Lua.
+
+For interactive mode of ocroscript, install:
+    * libeditline-dev
+
+A library for FST handling, used in a few scripts:
+    * OpenFST (http://www.openfst.org)
+
+A nice image handling library that we use for some parts:
+    * leptonica
+
+For advanced graphical debugging, install the latest versions of the following
+libs and recompile (and install) iulib:
+    * libsdl-dev, libsdl-gfx-dev, libsdl-image-dev
+
+
+--------------------------------------------------------------------------------
+Building Python Extension
+--------------------------------------------------------------------------------
+
+First of all, both Tesseract and OCRopus should be configured like this:
+    CXXFLAGS="-fPIC -O2" ./configure
+
+That should do the trick on a "standard" Linux. Then go to the python-binding/
+subdirectory in the OCRopus release directory and use the usual Python way
+of handling packages, which is
+    python setup.py build
+    python setup.py install
+
+If it worked, you'll be able to "import ocropus" from Python.

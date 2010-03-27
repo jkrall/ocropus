@@ -1,0 +1,11 @@
+
+    digraph "graph7"
+    {
+        rankdir = "LR";
+        size = "8,20";
+        ratio = compress;
+    "StandardGrouper"->"IGrouper";
+"Grouper"->"IGrouper";
+
+    }
+    

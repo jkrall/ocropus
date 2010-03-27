@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#
+# makes sure that ocropus compiles !
+#
+# Responsible: kofler
+#
+
+# include common functions (look there for documentation!)
+. `dirname $0`/common.sh
+
+# make sure we are in the right directory
+verifyDir
+
+retvalue=0
+
+section TEST-COMPILE
+# build ocropus with a minimal configuration
+verifyCommand "./configure --without-fst --without-leptonica --without-SDL" 0
+if [ $? -ne 0 ]; then
+    retvalue=$((retvalue + 1))
+fi
+verifyCommand "make" 0
+if [ $? -ne 0 ]; then
+    retvalue=$((retvalue + 1))
+fi
+verifyCommand "test -x ocroscript/ocroscript" 0
+if [ $? -ne 0 ]; then
+    retvalue=$((retvalue + 1))
+fi
+exit $retvalue
+

@@ -1,0 +1,3 @@
+`ocr-utils' is a bunch of useful functions that may be used throughout the OCR.
+Naturally, this directory cannot use any other OCR-specific directory, only 
+generic ones (colib, imglib, imgio).

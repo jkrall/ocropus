@@ -1,0 +1,90 @@
+#!/usr/bin/python
+
+# these are possible justifications; please stick to one of them
+
+STANDARD = "it's a textbook algorithm"
+APIDOCS = "it's based on a sample from the API documentation of the corresponding library"
+PERFORMANCE = "strict inlining is demonstrably necessary for performance"
+STABLE = "we don't expect to be making any changes to this code"
+DEBUGGING = "code used for debugging"
+
+exceptions = [
+    (r'quicksort',STANDARD,"tmb"),
+    (r'rowsort',STANDARD,"tmb"),
+    (r'io_png',APIDOCS,"tmb"),
+    (r'io_pbm',STABLE,"tmb"),
+    (r'debug_array',DEBUGGING,"tmb"),
+    (r'/commands/',DEBUGGING,"tmb"),
+    (r'seg-cuts',STABLE,"tmb"),
+    ]
+
+################################################################
+# nothing configurable below this line
+################################################################
+
+import sys,os,string,re,getopt
+
+optlist,args = getopt.getopt(sys.argv[1:],'jr')
+options = {}
+for k,v in optlist: options[k] = v
+justifications = options.has_key("-j")
+want_author = options.get("-r",None)
+if want_author: want_author = want_author.lower()
+
+if os.system("pmccabe -V > /dev/null")!=0:
+    sys.stderr.write("you must install the pmccabe tool (apt-get install pmccabe)")
+    sys.exit(1)
+
+maxlines = 150
+maxcyc1 = 15
+
+temp = ".___temp___.cc"
+for file in os.popen("find . -name '*.cc' -o -name '*.h'","r").readlines():
+    file = file[:-1]
+
+    # open each of the source files
+    source = open(file,"r").read()
+
+    # check the responsible person
+    m = re.search(r'Responsible:\s+([a-zA-Z0-9_-]+)',source)
+    if m:
+        author = m.group(1).lower() 
+    else:
+        author = "nobody"
+    if want_author and want_author!=author: continue
+
+    # pmccabe dies on templates and namespaces, so we remove those
+    if re.search('tolua_.*_open',source): continue
+    source = re.sub(r'template *\<.*?\>',r'',source)
+    source = re.sub(r'namespace[ a-zA-Z0-9_]*{',r'',source)
+    stream = open(temp,"w"); stream.write(source); stream.close()
+
+    # read the output from pmccabe and try to find bad cases
+    for line in os.popen("pmccabe %s 2> .pmccabe.errs"%temp):
+        if "too many }'s" in line: continue
+        line = line[:-1]
+        line = line.replace(temp,file)
+        fields = string.split(line,"\t")
+        try:
+            cyc1,cyc,nstat,where,nlines,location = fields
+        except:
+            sys.stderr.write("OOPS %s\n"%line)
+            continue
+        cyc1=int(cyc1)
+        nlines=int(nlines)
+        location = re.sub(r'\(([0-9]+)\)\s*:\s*',r':\1:',location)
+        if cyc1>maxcyc1 or nlines>maxlines:
+            exception = None
+            for e in exceptions:
+                pattern,reason,person = e
+                if re.search(pattern,location)>0:
+                    exception = e
+            if not justifications:
+                # print everything that is not an exception
+                if not exception:
+                    sys.stdout.write("%s cyc=%d nlines=%d [%s]\n"%(location,cyc1,nlines,author))
+            else:
+                # print all the justifications
+                if exception:
+                    pattern,reason,person = exception
+                    sys.stdout.write("%s cyc=%d nlines=%d [%s] %s\n"%(location,cyc1,nlines,person,reason))

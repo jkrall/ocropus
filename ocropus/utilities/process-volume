@@ -1,0 +1,71 @@
+#!/usr/bin/python
+
+import os,string,glob,sys,getopt,re
+
+script = sys.argv[0]
+assert os.path.exists(script)
+
+def uptodate(source=None,target=None):
+    if not os.path.exists(target): return 0
+    return os.path.getmtime(source)<os.path.getmtime(target)
+
+def keywords(**keywords): return keywords
+
+extraction_params = keywords(
+    element="ocr_cinfo",
+    max_lines=4000,
+    min_len=2,
+    max_len=10,
+    regex=r'^([A-Za-z][a-z-]*[,.;?!-]?|[0-9]+)$',
+    dict="/usr/share/dict/words")
+
+nnet_file = "/usr/local/share/ocropus/models/neural-net-file.nn"
+
+def base(s): 
+    return re.sub(r'\.\w+$','',s)
+
+def run(command,*args,**keywords):
+    print "#",command,string.join(args)
+    env = os.environ.copy()
+    for k in keywords: env[k] = str(keywords[k])
+    os.spawnvpe(os.P_WAIT,command,[command]+list(args),env)
+
+for vol in sys.argv[1:]:
+
+    # perform page-level binarization
+
+    for page in glob.glob(vol+"/Image_????.JPEG"):
+        if uptodate(script,base(page)+".png") and uptodate(page,base(page)+".png"): 
+            continue
+        run("ocroscript","sauvola",
+            page,
+            base(page)+".png",
+            sauvola_k=0.2)
+
+    # extract line elements from the pages
+
+    sample = glob.glob(vol+"/????/????.png")
+    if sample==[] or not uptodate(script,sample[0]):
+        run("hocr-extract-g1000",
+            vol+"/hOCR.html",
+            vol+"/Image_????.png",
+            vol+"/%04d/%04d",
+            **extraction_params)
+
+    # align each line with its corresponding transcription
+
+    lines = glob.glob(vol+"/????/????.png")
+    print len(lines),"lines to be processed"
+    for line in lines:
+        if uptodate(source=base(line)+".png",target=base(line)+".costs"): 
+            continue
+        run("ocroscript","line-clean",
+            line,
+            base(line)+".clean.png")
+        run("ocroscript","align-transcription","--cut",
+            base(line)+".clean.png",
+            base(line)+".txt",
+            base(line)+".cseg.png",
+            base(line)+".rseg.png",
+            base(line)+".costs",
+            bpnet=nnet_file)
