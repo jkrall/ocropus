@@ -1,5 +1,4 @@
-Ocropus 0.4 - Fork for OSX 10.5.6
-==========
+h1. Ocropus 0.4 - Fork for OSX 10.5.6
 
 This repo is a clone of the original ocropus 0.4 source, found here:  http://code.google.com/p/ocropus/downloads/list
 
@@ -8,8 +7,7 @@ I've applied the various patches and fixes describe below, so that the source ca
 
 This fork is purely for my own use, and is NOT official.  Please contribute to the original repository, not this one.
 
-Instructions for building this repo
------------------------------------
+h2. Instructions for building this repo
 
 # sudo port install jpeg png tiff
 # cd tesseract
@@ -28,9 +26,9 @@ Instructions for building this repo
 
 
 
+--------
 
-Original instructions for getting original source to build on OSX
-==========
+h1. Original instructions for getting original source to build on OSX
 
 
 Compiling ocropus on Mac OS X
