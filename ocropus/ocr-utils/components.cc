@@ -27,6 +27,9 @@
 #include "iulib/iulib.h"
 #include "components.h"
 
+#include <crt_externs.h>
+#define environ (*_NSGetEnviron())
+
 using namespace colib;
 
 namespace {
