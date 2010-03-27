@@ -1,2 +1,5 @@
 .deps
 autom4te.cache
+*.o
+*.a
+*.dylib
