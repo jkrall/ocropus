@@ -8,10 +8,24 @@ I've applied the various patches and fixes describe below, so that the source ca
 
 This fork is purely for my own use, and is NOT official.  Please contribute to the original repository, not this one.
 
+Instructions for building this repo
+-----------------------------------
+
+# sudo port install jpeg png tiff
+# cd iulib
+# make
+# sudo make install
+# cd ../ocropus
+# make
+# sudo make install
+# gunzip data/models/default.fst.gz
+# sudo cp -r data/* /usr/local/share/ocropus/.
 
 
 
-Instructions for getting original source to build on OSX
+
+
+Original instructions for getting original source to build on OSX
 ==========
 
 
