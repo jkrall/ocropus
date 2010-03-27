@@ -62,7 +62,7 @@ noinst_PROGRAMS = $(am__EXEEXT_1) main-ocr-binarize-otsu$(EXEEXT) \
 am__append_1 = -DHAVE_GSL
 am__append_2 = -I/usr/local/include/tesseract -DHAVE_TESSERACT
 am__append_3 = $(srcdir)/ocr-tesseract/tesseract.cc
-am__append_4 = main-ocr-orientation  main-ocr-thresholding
+am__append_4 = 
 #am__append_5 = -I -DHAVE_LEPTONICA
 bin_PROGRAMS = ocr-distance$(EXEEXT) ocropus$(EXEEXT)
 check_PROGRAMS = test-binarize-sauvola$(EXEEXT) \
@@ -211,8 +211,7 @@ am_libocropus_a_OBJECTS = ocr-binarize-otsu.$(OBJEXT) \
 	voronoi-pageseg.$(OBJEXT) voronoi.$(OBJEXT) $(am__objects_1)
 libocropus_a_OBJECTS = $(am_libocropus_a_OBJECTS)
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
-am__EXEEXT_1 = main-ocr-orientation$(EXEEXT) \
-	main-ocr-thresholding$(EXEEXT)
+am__EXEEXT_1 =
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am_main_be_OBJECTS = main-be.$(OBJEXT)
 main_be_OBJECTS = $(am_main_be_OBJECTS)
@@ -225,18 +224,6 @@ am_main_ocr_binarize_sauvola_OBJECTS =  \
 main_ocr_binarize_sauvola_OBJECTS =  \
 	$(am_main_ocr_binarize_sauvola_OBJECTS)
 main_ocr_binarize_sauvola_DEPENDENCIES = libocropus.a
-am__main_ocr_orientation_SOURCES_DIST =  \
-	$(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-am_main_ocr_orientation_OBJECTS =  \
-	main-ocr-orientation.$(OBJEXT)
-main_ocr_orientation_OBJECTS = $(am_main_ocr_orientation_OBJECTS)
-main_ocr_orientation_DEPENDENCIES = libocropus.a
-am__main_ocr_thresholding_SOURCES_DIST =  \
-	$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-am_main_ocr_thresholding_OBJECTS =  \
-	main-ocr-thresholding.$(OBJEXT)
-main_ocr_thresholding_OBJECTS = $(am_main_ocr_thresholding_OBJECTS)
-main_ocr_thresholding_DEPENDENCIES = libocropus.a
 am_main_voronoi_ocropus_OBJECTS = main-voronoi-ocropus.$(OBJEXT)
 main_voronoi_ocropus_OBJECTS = $(am_main_voronoi_ocropus_OBJECTS)
 main_voronoi_ocropus_DEPENDENCIES = libocropus.a
@@ -270,8 +257,6 @@ CXXLINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) \
 SOURCES = $(libocropus_a_SOURCES) $(main_be_SOURCES) \
 	$(main_ocr_binarize_otsu_SOURCES) \
 	$(main_ocr_binarize_sauvola_SOURCES) \
-	$(main_ocr_orientation_SOURCES) \
-	$(main_ocr_thresholding_SOURCES) \
 	$(main_voronoi_ocropus_SOURCES) $(ocr_distance_SOURCES) \
 	$(ocropus_SOURCES) $(test_binarize_sauvola_SOURCES) \
 	$(test_narray_io_SOURCES) $(test_ocr_utils_SOURCES) \
@@ -279,8 +264,6 @@ SOURCES = $(libocropus_a_SOURCES) $(main_be_SOURCES) \
 DIST_SOURCES = $(am__libocropus_a_SOURCES_DIST) $(main_be_SOURCES) \
 	$(main_ocr_binarize_otsu_SOURCES) \
 	$(main_ocr_binarize_sauvola_SOURCES) \
-	$(am__main_ocr_orientation_SOURCES_DIST) \
-	$(am__main_ocr_thresholding_SOURCES_DIST) \
 	$(main_voronoi_ocropus_SOURCES) $(ocr_distance_SOURCES) \
 	$(ocropus_SOURCES) $(test_binarize_sauvola_SOURCES) \
 	$(test_narray_io_SOURCES) $(test_ocr_utils_SOURCES) \
@@ -516,10 +499,6 @@ worddir = ${datadir}/ocropus/words
 # install the data
 model_DATA = $(srcdir)/data/models/*
 word_DATA = $(srcdir)/data/words/*
-main_ocr_orientation_SOURCES = $(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-main_ocr_orientation_LDADD = libocropus.a
-main_ocr_thresholding_SOURCES = $(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-main_ocr_thresholding_LDADD = libocropus.a
 ocropusinclude_HEADERS = $(srcdir)/include/glclass.h \
 	$(srcdir)/include/glcuts.h $(srcdir)/include/gldataset.h \
 	$(srcdir)/include/glfmaps.h $(srcdir)/include/glinerec.h \
@@ -684,12 +663,6 @@ main-ocr-binarize-otsu$(EXEEXT): $(main_ocr_binarize_otsu_OBJECTS) $(main_ocr_bi
 main-ocr-binarize-sauvola$(EXEEXT): $(main_ocr_binarize_sauvola_OBJECTS) $(main_ocr_binarize_sauvola_DEPENDENCIES) 
 	@rm -f main-ocr-binarize-sauvola$(EXEEXT)
 	$(CXXLINK) $(main_ocr_binarize_sauvola_OBJECTS) $(main_ocr_binarize_sauvola_LDADD) $(LIBS)
-main-ocr-orientation$(EXEEXT): $(main_ocr_orientation_OBJECTS) $(main_ocr_orientation_DEPENDENCIES) 
-	@rm -f main-ocr-orientation$(EXEEXT)
-	$(CXXLINK) $(main_ocr_orientation_OBJECTS) $(main_ocr_orientation_LDADD) $(LIBS)
-main-ocr-thresholding$(EXEEXT): $(main_ocr_thresholding_OBJECTS) $(main_ocr_thresholding_DEPENDENCIES) 
-	@rm -f main-ocr-thresholding$(EXEEXT)
-	$(CXXLINK) $(main_ocr_thresholding_OBJECTS) $(main_ocr_thresholding_LDADD) $(LIBS)
 main-voronoi-ocropus$(EXEEXT): $(main_voronoi_ocropus_OBJECTS) $(main_voronoi_ocropus_DEPENDENCIES) 
 	@rm -f main-voronoi-ocropus$(EXEEXT)
 	$(CXXLINK) $(main_voronoi_ocropus_OBJECTS) $(main_voronoi_ocropus_LDADD) $(LIBS)
@@ -749,8 +722,6 @@ include ./$(DEPDIR)/logger.Po
 include ./$(DEPDIR)/main-be.Po
 include ./$(DEPDIR)/main-ocr-binarize-otsu.Po
 include ./$(DEPDIR)/main-ocr-binarize-sauvola.Po
-include ./$(DEPDIR)/main-ocr-orientation.Po
-include ./$(DEPDIR)/main-ocr-thresholding.Po
 include ./$(DEPDIR)/main-voronoi-ocropus.Po
 include ./$(DEPDIR)/memory.Po
 include ./$(DEPDIR)/narray-io.Po
@@ -2031,34 +2002,6 @@ main-ocr-binarize-sauvola.obj: $(srcdir)/ocr-binarize/main-ocr-binarize-sauvola.
 #	source='$(srcdir)/ocr-binarize/main-ocr-binarize-sauvola.cc' object='main-ocr-binarize-sauvola.obj' libtool=no \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-ocr-binarize-sauvola.obj `if test -f '$(srcdir)/ocr-binarize/main-ocr-binarize-sauvola.cc'; then $(CYGPATH_W) '$(srcdir)/ocr-binarize/main-ocr-binarize-sauvola.cc'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/ocr-binarize/main-ocr-binarize-sauvola.cc'; fi`
-
-main-ocr-orientation.o: $(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-ocr-orientation.o -MD -MP -MF $(DEPDIR)/main-ocr-orientation.Tpo -c -o main-ocr-orientation.o `test -f '$(srcdir)/ocr-autoclean/main-ocr-orientation.cc' || echo '$(srcdir)/'`$(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-	mv -f $(DEPDIR)/main-ocr-orientation.Tpo $(DEPDIR)/main-ocr-orientation.Po
-#	source='$(srcdir)/ocr-autoclean/main-ocr-orientation.cc' object='main-ocr-orientation.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-ocr-orientation.o `test -f '$(srcdir)/ocr-autoclean/main-ocr-orientation.cc' || echo '$(srcdir)/'`$(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-
-main-ocr-orientation.obj: $(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-ocr-orientation.obj -MD -MP -MF $(DEPDIR)/main-ocr-orientation.Tpo -c -o main-ocr-orientation.obj `if test -f '$(srcdir)/ocr-autoclean/main-ocr-orientation.cc'; then $(CYGPATH_W) '$(srcdir)/ocr-autoclean/main-ocr-orientation.cc'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/ocr-autoclean/main-ocr-orientation.cc'; fi`
-	mv -f $(DEPDIR)/main-ocr-orientation.Tpo $(DEPDIR)/main-ocr-orientation.Po
-#	source='$(srcdir)/ocr-autoclean/main-ocr-orientation.cc' object='main-ocr-orientation.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-ocr-orientation.obj `if test -f '$(srcdir)/ocr-autoclean/main-ocr-orientation.cc'; then $(CYGPATH_W) '$(srcdir)/ocr-autoclean/main-ocr-orientation.cc'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/ocr-autoclean/main-ocr-orientation.cc'; fi`
-
-main-ocr-thresholding.o: $(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-ocr-thresholding.o -MD -MP -MF $(DEPDIR)/main-ocr-thresholding.Tpo -c -o main-ocr-thresholding.o `test -f '$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc' || echo '$(srcdir)/'`$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-	mv -f $(DEPDIR)/main-ocr-thresholding.Tpo $(DEPDIR)/main-ocr-thresholding.Po
-#	source='$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc' object='main-ocr-thresholding.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-ocr-thresholding.o `test -f '$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc' || echo '$(srcdir)/'`$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-
-main-ocr-thresholding.obj: $(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-ocr-thresholding.obj -MD -MP -MF $(DEPDIR)/main-ocr-thresholding.Tpo -c -o main-ocr-thresholding.obj `if test -f '$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc'; then $(CYGPATH_W) '$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc'; fi`
-	mv -f $(DEPDIR)/main-ocr-thresholding.Tpo $(DEPDIR)/main-ocr-thresholding.Po
-#	source='$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc' object='main-ocr-thresholding.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
-#	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o main-ocr-thresholding.obj `if test -f '$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc'; then $(CYGPATH_W) '$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc'; else $(CYGPATH_W) '$(srcdir)/$(srcdir)/ocr-autoclean/main-ocr-thresholding.cc'; fi`
 
 main-voronoi-ocropus.o: $(srcdir)/ocr-voronoi/main-voronoi-ocropus.cc
 	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT main-voronoi-ocropus.o -MD -MP -MF $(DEPDIR)/main-voronoi-ocropus.Tpo -c -o main-voronoi-ocropus.o `test -f '$(srcdir)/ocr-voronoi/main-voronoi-ocropus.cc' || echo '$(srcdir)/'`$(srcdir)/ocr-voronoi/main-voronoi-ocropus.cc

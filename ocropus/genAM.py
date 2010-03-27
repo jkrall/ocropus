@@ -12,13 +12,15 @@ extradirs = """
 tess = """
     ocr-tesseract/tesseract.cc
 """.split()
+# 3/26/2010 -- Removed, because these files seem to have problems building properly
 # ocr-autoclean/ocr-orientation.cc
 # ocr-autoclean/ocr-thresholding.cc
 
 tessmains = """
-    ocr-autoclean/main-ocr-orientation.cc
-    ocr-autoclean/main-ocr-thresholding.cc
 """.split()
+# 3/26/2010 -- Removed, because these files seem to have problems building properly
+# ocr-autoclean/main-ocr-orientation.cc
+# ocr-autoclean/main-ocr-thresholding.cc
 
 # extra files which should not go to libocropus
 exclude = """

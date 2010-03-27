@@ -57,11 +57,7 @@ endif
 if ! notesseract
     AM_CPPFLAGS += -I@tessheaders@ -DHAVE_TESSERACT
     libocropus_a_SOURCES += $(srcdir)/ocr-tesseract/tesseract.cc
-    noinst_PROGRAMS +=  main-ocr-orientation  main-ocr-thresholding
-    main_ocr_orientation_SOURCES = $(srcdir)/ocr-autoclean/main-ocr-orientation.cc
-    main_ocr_orientation_LDADD = libocropus.a
-    main_ocr_thresholding_SOURCES = $(srcdir)/ocr-autoclean/main-ocr-thresholding.cc
-    main_ocr_thresholding_LDADD = libocropus.a
+    noinst_PROGRAMS += 
 
 endif
 
