@@ -12,7 +12,10 @@ Instructions for building this repo
 -----------------------------------
 
 # sudo port install jpeg png tiff
-# cd iulib
+# cd tesseract
+# make
+# sudo make install
+# cd ../iulib
 # make
 # sudo make install
 # cd ../ocropus
