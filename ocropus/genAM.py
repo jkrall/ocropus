@@ -11,9 +11,9 @@ extradirs = """
 # only add these files if tesseract is enabled
 tess = """
     ocr-tesseract/tesseract.cc
-    ocr-autoclean/ocr-orientation.cc
-    ocr-autoclean/ocr-thresholding.cc
 """.split()
+# ocr-autoclean/ocr-orientation.cc
+# ocr-autoclean/ocr-thresholding.cc
 
 tessmains = """
     ocr-autoclean/main-ocr-orientation.cc

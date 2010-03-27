@@ -68,4 +68,12 @@ namespace iulib {
 
     void dwait() {
     }
+
+    bool dactive() {
+      return false;
+    }
+
+    const char *dsection_set(const char *name) {
+      return name;
+    }  
 }
