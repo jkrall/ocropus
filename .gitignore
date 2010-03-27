@@ -3,3 +3,9 @@ autom4te.cache
 *.o
 *.a
 *.dylib
+main-be
+main-ocr-binarize-otsu
+main-ocr-binarize-sauvola
+main-voronoi-ocropus
+ocr-distance
+ocropus
