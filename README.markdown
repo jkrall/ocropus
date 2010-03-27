@@ -15,6 +15,7 @@ Instructions for building this repo
 # cd tesseract
 # make
 # sudo make install
+# sudo cp -r tessdata /usr/local/share/.
 # cd ../iulib
 # make
 # sudo make install
