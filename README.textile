@@ -25,9 +25,6 @@ h2. Instructions for building this repo
 
 
 
-
---------
-
 h1. Original instructions for getting original source to build on OSX
 
 
